@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Customer Details</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-CxX86qY7AV7Cwvo5LGhj2m2hr6QNX35aA5H9gSYZJ3aNkaRu8Fs6m1OcnMwbuFQh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/bootstrap.min.css' %}"
+    />
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body class="bg-light">
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <form
+            method="post"
+            action="{% url 'learn:update_profile' %}"
+            class="card shadow-lg border-0"
+          >
+            {%csrf_token%}
+            <div class="card-header bg-primary text-white text-center">
+              <h2 class="mb-0">Welcome, {{ user.username }}</h2>
+            </div>
+            <div class="card-body">
+              {% for field in form %} {{field.as_field_group}} {% endfor %}
+              <div class="text-center">
+                <a
+                  class="btn btn-primary btn-lg"
+                  href="{% url 'learn:home' %}"
+                >
+                  <i class="bi bi-house-door"></i> Go to Home
+                </a>
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-lg"
+                  href="{% url 'learn:edit_profile' %}"
+                >
+                  <i class="bi bi-house-door"></i> Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ho+j7jyWK8fNQe+A12WJlPl1FfJSkj7Nf65HduQq8cl8Cig9Vyd6kDy8e3MOFt+L"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>E Learn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="Free HTML Templates" />
+    <meta name="description" content="Free HTML Templates" />
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Owl Carousel Stylesheet -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+      {% include "content/nav_courseSearch_content.html" %}
+      {% include "content/about_content.html" %}
+    {% include "content/course_small_content.html" %}   
+    {% include "content/team_content.html" %}
+    {% include "content/testimonial_content.html" %}
+    {% include "content/contact_content.html" %}
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Owl Carousel JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <!-- Custom JS
+       <script>
+      $(document).ready(function () {
+        $(".courses-carousel").owlCarousel({
+          autoplay: true,
+          smartSpeed: 1500,
+          loop: true,
+          dots: false,
+          nav: false,
+          /*
+            loop: true,
+            margin: 10,
+            nav: true,
+            */
+          responsive: {
+            0: {
+              items: 1,
+            },
+            576: {
+              items: 2,
+            },
+            768: {
+              items: 3,
+            },
+            992: {
+              items: 4,
+            },
+            /*
+            0: { items: 1 },
+            600: { items: 2 },
+            1000: { items: 3 },
+            */
+          },
+        });
+        $(".team-carousel").owlCarousel({
+          autoplay: true,
+          smartSpeed: 1000,
+          margin: 30,
+          dots: false,
+          loop: true,
+          nav: true,
+          /*
+            loop: true,
+            margin: 10,
+            nav: true,
+            */
+          responsive: {
+            0: { items: 1 },
+            600: { items: 2 },
+            1000: { items: 3 },
+          },
+        });
+      });
+    </script>
+    -->
+  
+    <script src="{% static "js/proxy.js" %}"></script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+<h2>Complete Your Payment</h2>
+<p>Course: {{ order.course.name }}</p>
+<form method="post" >
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Pay Now</button>
+</form>
