@@ -133,9 +133,9 @@ DATABASES = {
     }
 }
 
-POSTGRE_LOCALLY = config('POSTGRE_LOCALLY')
+POSTGRE_LOCALLY = config('POSTGRE_LOCALLY', cast=bool)
 
-if POSTGRE_LOCALLY:
+if POSTGRE_LOCALLY == True or ENVIRONMENT == 'production':
     DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
 
 # Password validation
