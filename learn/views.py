@@ -20,7 +20,7 @@ from django.utils.encoding import force_bytes, force_str
 from .models import *
 from .form import UserForm
 from e_learn import settings
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect
 from django.core.paginator import Paginator
 
 # Create your views here.
@@ -271,17 +271,22 @@ def payment(request, order_id):
 
     return render(request, 'payment.html', {'order': order})
 
-@csrf_exempt
+@csrf_protect
 def submit_mail(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         subject = request.POST.get('subject')
-        message = request.POST.get('message')
+        text = request.POST.get('text')
         from_email = request.POST.get('from_email')
-        to_email = 'wwwraihanrony123@gmail.com'
-        message = f"Subject: {subject}\n\n{message}\\n\nFrom: {name} - {from_email}"
-        send_mail(subject, message, to_email, [to_email])
-        return JsonResponse({'success': True})
-        #messages.success(request, 'Account created successfully')
-        #return HttpResponseRedirect(reverse('learn:home'))
+        to_email = 'wwwronyraihan123@gmail.com'
+
+        # Format email content
+        text = f"Subject: {subject}\n\n{text}\n\nFrom: {name} - {from_email}"
+
+        try:
+            send_mail(subject, text, from_email, [to_email])
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+
     return JsonResponse({'success': False})
