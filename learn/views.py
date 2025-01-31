@@ -30,19 +30,32 @@ def index(request):
     blogs = Blog.objects.all()
     courses = Course.objects.all()[:6]
     Instructors = Instructor.objects.all()[:4]
+    counts = {
+        'tags':tags.count(),
+        'blogs':Blog.objects.count(),
+        'instructors':Instructor.objects.count(),
+        'courses':Course.objects.count(),
+    }
     context = {'tags':tags,
                'blogs':blogs,
                 'courses':courses,
                 'instructors':Instructors,
+                'counts':counts
                }
     return render(request, "learn/landing_page.html", context)
 
 
 def about(request):  
     blogs = Blog.objects.all()
+    counts = {
+        'tags':Tag.objects.count(),
+        'blogs':Blog.objects.count(),
+        'instructors':Instructor.objects.count(),
+        'courses':Course.objects.count(),
+    }
     context = {
                'blogs':blogs,
-               
+                'counts':counts,
                }
     return render(request, "learn/about.html", context)
 
