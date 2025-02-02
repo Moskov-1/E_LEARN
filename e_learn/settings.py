@@ -14,9 +14,13 @@ from pathlib import Path
 from .info import * 
 import dj_database_url
 from decouple import config
+import cloudinary
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+POSTGRE_LOCALLY = config('POSTGRE_LOCALLY', cast=bool)
+ENVIRONMENT = ENVIRONMENT
+
 
 STATIC_URL = '/static/'
 # Collects static files here during deployment
@@ -27,17 +31,22 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = '/media/' #-> http://127.0.0.1:8000/media (handles urls served from MEDIA_ROOT)
-MEDIA_ROOT = BASE_DIR / "media" #-> Abs path to media folder
-# Add root to Project urls.py  
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+if ENVIRONMENT == 'production' or POSTGRE_LOCALLY == True:
+    #for cloudinary 
+    STORAGES = {
+        "default": {
+            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+            },
+    }
+else:
+    MEDIA_ROOT = BASE_DIR / "media" #-> Abs path to media folder
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-ENVIRONMENT = ENVIRONMENT
 if ENVIRONMENT == 'production':
     DEBUG = False   
 else:
@@ -52,7 +61,6 @@ EMAIL_HOST = EMAIL_HOST
 EMAIL_HOST_USER = EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 EMAIL_PORT = EMAIL_PORT
-
 
 # Site information
 SITE_INFO = {
@@ -72,8 +80,15 @@ SITE_INFO = {
     },
 }
 
-# Application definition
+# Configuration       
+cloudinary.config( 
+    cloud_name = config('CLOUD_NAME'), 
+    api_key = config('API_KEY'), 
+    api_secret =config('API_SECRET'), 
+    secure=True
+)
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -81,6 +96,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'learn',
 ]
 
@@ -88,16 +105,14 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# root url
 ROOT_URLCONF = 'e_learn.urls'
 
 TEMPLATES = [
@@ -115,13 +130,14 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'learn.context_processors.site_info',
                 'learn.context_processors.tag_context_processor',
+                'cloudinary_storage',
+                'cloudinary',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'e_learn.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -138,7 +154,6 @@ DATABASES = {
     }
 }
 
-POSTGRE_LOCALLY = config('POSTGRE_LOCALLY', cast=bool)
 
 if POSTGRE_LOCALLY == True or ENVIRONMENT == 'production':
     DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
