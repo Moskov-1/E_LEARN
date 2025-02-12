@@ -1,4 +1,7 @@
 reupload.
+Also faced a lot of issues trying to config this python 3.13.1 and Django 5.1.6 project to work with the current Cloudinary media server. No apparent faults were found just settings.py was configed incorrectly according to django. 
+Solution: Create new project. install all packages and step by step add the settings in settings.py. Copy all the models exactly like you want it rendered., Migrate, and if it works 
+replace the the settings.py of your main project with the one from the freshly made project  
 Django backend project. UI collected from FreeCSS.com.
 Functionalities include:
 1. Sign up and login with real gmail

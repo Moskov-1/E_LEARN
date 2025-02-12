@@ -15,10 +15,15 @@
       style="padding: 0 30px"
     >
     {% for ins in instructors %}
+    <div class="team-item">
+      {% load cloudinary %}
+      {% cloudinary ins.image quality='auto' width=300 height=300 crop='pad' class='img-fluid w-100' background='gen_fill:ignore-foreground_true' %}
+      {% comment %} <img class="" src="{% cloudinary ins.image width=300 height=200 crop='fill' %}" alt=""/> {% endcomment %}
+      {% comment %} <img class="img-fluid w-100" src="{{ins.image.url}}" alt=""/> {% endcomment %}
+      {% comment %} <img class="img-fluid w-100" src="{{ ins.image.url|replace:'upload/', 'upload/w_300,h_200,c_fill/' }}" alt="Instructor"> {% endcomment %}
+      {% comment %} <img class="img-fluid w-100" src="{{ ins.image.url|cut:'upload/' }}upload/w_300,h_200,c_fill/{{ ins.image.public_id }}" alt="Instructor Image"> {% endcomment %}
+      {% comment %} <img class="img-fluid w-100" src="{{ ins.image.url|replace:'upload/', 'upload/w_300,h_200,c_fill/' }}" alt="Instructor"> {% endcomment %}
 
-      <div class="team-item">
-        <img class="img-fluid w-100" src="{{ins.image.url}}" alt=""
-        />
         <div class="bg-light text-center p-4">
           <h5 class="mb-3">{{ins.name|title }}</h5>
           <p class="mb-2">{{ins.profession}}</p>

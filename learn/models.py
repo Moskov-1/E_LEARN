@@ -4,7 +4,9 @@ import cv2
 import numpy as np
 from django.core.files.base import ContentFile
 from io import BytesIO
-from PIL import Image
+from PIL import *
+from cloudinary.models import CloudinaryField
+
 #from django.db.models import DurationField
 #from datetime import timedelta
 
@@ -25,7 +27,7 @@ class Instructor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='instructor')
    
     name = models.CharField(max_length=500, blank=True, null=True)
-    image = models.ImageField(upload_to='instructors/images/', blank=True, null=True)
+    image = CloudinaryField(folder='instructors/images/', blank=True, null=True)
     profession = models.CharField(max_length=200, null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
     fb = models.CharField(max_length=500, null=True, blank=True)
@@ -34,27 +36,27 @@ class Instructor(models.Model):
     def __str__(self):
         return self.name
     
-    def save(self, *args, **kwargs):
-        if not self.name and self.user:
-            self.name = f"{self.user.first_name} {self.user.last_name}"
-        # Check if an image is uploaded
-        if self.image:
-            # PIL format
-            img = Image.open(self.image)
-            original_format = img.format
-            img_array = np.array(img)
-            # resizing with openCV (width x height) 
-            # potrait 
-            processed_img = cv2.resize(img_array, (120, 100))
-            # Convert back to PIL format
-            processed_img = Image.fromarray(processed_img)
-            # Save the processed image back to the image field
-            buffer = BytesIO()
-            processed_img.save(buffer, format=original_format)  # Save as original format
-            buffer.seek(0)
-            self.image.save(self.image.name, ContentFile(buffer.read()), save=False)
+    # def save(self, *args, **kwargs):
+    #     if not self.name and self.user:
+    #         self.name = f"{self.user.first_name} {self.user.last_name}"
+    #     # Check if an image is uploaded
+    #     if self.image:
+    #         # PIL format
+    #         img = Image.open(self.image)
+    #         original_format = img.format
+    #         img_array = np.array(img)
+    #         # resizing with openCV (width x height) 
+    #         # potrait 
+    #         processed_img = cv2.resize(img_array, (120, 100))
+    #         # Convert back to PIL format
+    #         processed_img = Image.fromarray(processed_img)
+    #         # Save the processed image back to the image field
+    #         buffer = BytesIO()
+    #         processed_img.save(buffer, format=original_format)  # Save as original format
+    #         buffer.seek(0)
+    #         self.image.save(self.image.name, ContentFile(buffer.read()), save=False)
 
-        super().save(*args, **kwargs)
+    #     super().save(*args, **kwargs)
     
 # Course Model
 class Course(models.Model):
@@ -65,7 +67,7 @@ class Course(models.Model):
     ]
     title = models.CharField(max_length=200)
     description = models.TextField()
-    image = models.ImageField(upload_to='courses/images/')
+    image = CloudinaryField(folder='courses/images/',blank=True, null=True)
     instructors = models.ManyToManyField(Instructor, related_name='instructor_courses')
     tags = models.ManyToManyField(Tag, related_name='tagged_courses')
     rating = models.FloatField(default=3.5)  # Default rating for courses
@@ -100,7 +102,7 @@ class Course(models.Model):
 class Video(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='videos')
     title = models.CharField(max_length=200)
-    video_file = models.FileField(upload_to='courses/videos/')
+    video_file = CloudinaryField(folder='courses/videos/', resource_type='video',blank=True, null=True)
     is_watched = models.BooleanField(default=False)
     #duration = DurationField()  # Field to store video duration.... wow :v
     def __str__(self):
@@ -111,7 +113,7 @@ class CourseDetail(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='details')
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
-    image = models.ImageField(upload_to='courses/details/images/')
+    image = CloudinaryField(folder='courses/details/images/',blank=True, null=True)
 
     def __str__(self):
         return f"{self.course.title} - {self.title} -{self.image.url}"
@@ -120,7 +122,7 @@ class CourseDetail(models.Model):
 class Testimonial(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='testimonials')
     content = models.TextField()
-    image = models.ImageField(upload_to='testimonials/images/', blank=True, null=True)
+    image = CloudinaryField(folder='testimonials/images/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.user.username}'s Testimonial"
@@ -129,7 +131,7 @@ class Testimonial(models.Model):
 class Blog(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-    image = models.ImageField(upload_to='blogs/images/')
+    image = CloudinaryField(folder='blogs/images/',blank=True, null=True)
     tags = models.ManyToManyField(Tag, related_name='tagged_blogs')
     
     def __str__(self):
