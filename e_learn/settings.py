@@ -49,10 +49,8 @@ ENVIRONMENT = config('ENVIRONMENT', default='development')
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if ENVIRONMENT == 'production':
-    DEBUG = False
-else:
-    DEBUG = True
+
+DEBUG = config('DEBUG', default=False, cast=bool)
     
 if ENVIRONMENT == 'production':    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
