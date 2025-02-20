@@ -17,7 +17,9 @@
     {% for course in courses %}
     
       <div class="courses-item position-relative">
-        <img class="img-fluid" src={{course.image.url}} alt="" />
+        {% load cloudinary %}
+        {% cloudinary course.image quality='100' width=500 height=300 crop='pad' class='img-fluid' background='gen_fill:ignore-foreground_true' %}
+        {% comment %} <img class="img-fluid" src={{course.image.url}} alt="" /> {% endcomment %}
         <div class="courses-text">
           <h4 class="text-center text-white px-3">
            {{course.title}}
