@@ -31,7 +31,7 @@ SITE_INFO = {
     "phone": "+1234567890",
     "social_links": {
         "facebook": "https://facebook.com/profile.php?id=61571444717820",
-        "twitter": "https://twitter.com/",
+        "twitter": "https://github.com/Moskov-1",
         "linkedin": "https://www.linkedin.com/in/raihan-rony-a461121a1/",
         "instagram": "https://instagram.com/",
         "youtube": "https://youtube.com/",
