@@ -24,7 +24,7 @@
                     <div class="owl-carousel related-carousel position-relative" style="padding: 0 30px;">
                         {% for course in related_courses %}
                         
-                            <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="detail.html">
+                            <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="{% url "learn:course_detail" course.id %}">
                                 <img class="img-fluid" src="{{course.image.url}}" alt="">
                                 <div class="courses-text">
                                     <h4 class="text-center text-white px-3">{{course.title}}</h4>
@@ -94,7 +94,7 @@
                     <div class="mb-5">
                         <h2 class="mb-4">Recent Courses</h2>
                         {% for course in recent_courses %}
-                            <a class="d-flex align-items-center text-decoration-none mb-4" href="">
+                            <a class="d-flex align-items-center text-decoration-none mb-4" href="{% url "learn:course_detail" course.id %}">
                                 <img class="img-fluid w-25 rounded" src="{{course.image.url}}" alt="">
                                 <div class="pl-3">
                                     <h6>{{course.title|title}}</h6>
