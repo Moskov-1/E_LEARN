@@ -28,14 +28,15 @@
                     {% if message.tags == 'success' %}
                     <p class="text-green-600 pt-3">{{message}} 
                     </p>
-                    <u>
-                        <a href="{% url "learn:login" %}" class="font-bold hover:underline">Login</a>
-                    </u>
+                   
                     {% elif message.tags == 'error' %}
                     <p class="text-red-600 pt-3">{{message}}</p>
                     {% endif %}
                 {% endfor %}
             {% endif %}
+            <u>
+                <a href="{% url "learn:login" %}" class="font-bold hover:underline">Login</a>
+            </u>
         </section>
 
         

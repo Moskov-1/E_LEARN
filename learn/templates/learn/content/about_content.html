@@ -70,38 +70,44 @@
     <br/>
     <br/>
     <hr/>
-    {% for blog in blogs %}
-    <br/>
-      <div class="row">
-        <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px">
-          <div class="position-relative h-100">
-            <img
-              class="position-absolute w-100 h-100"
-              src="{{blog.image.url}}"
-              alt="{{blog.title}}"
-              style="object-fit: cover"
-            />
+    <div class='container '>
+      <h2 class="text-center mb-4">Latest Blogs</h2>
+      <div class='p-3 border rounded overflow-auto' style="max-height: 500px;">
+
+        {% for blog in blogs %}
+        <br/>
+          <div class="row">
+            <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px">
+              <div class="position-relative h-100">
+                <img
+                  class="position-absolute w-100 h-100"
+                  src="{{blog.image.url}}"
+                  alt="{{blog.title}}"
+                  style="object-fit: cover"
+                />
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="section-title position-relative mb-4">
+                <h6
+                  class="d-inline-block position-relative text-secondary text-uppercase pb-2"
+                >
+                  Blogs
+                </h6>
+                <h1 class="display-4">{{blog.title}}</h1>
+                {% for tag in blog.tags.all %}
+                <span class="badge bg-primary me-2" style="color:white;font-size: 1.2rem;">{{ tag.name }}</span>
+                {% endfor %}
+              </div>
+              <p>
+                {{blog.content}}
+              </p>
+              
+            </div>
           </div>
-        </div>
-        <div class="col-lg-7">
-          <div class="section-title position-relative mb-4">
-            <h6
-              class="d-inline-block position-relative text-secondary text-uppercase pb-2"
-            >
-              Blogs
-            </h6>
-            <h1 class="display-4">{{blog.title}}</h1>
-            {% for tag in blog.tags.all %}
-            <span class="badge bg-primary me-2" style="color:white;font-size: 1.2rem;">{{ tag.name }}</span>
-            {% endfor %}
-          </div>
-          <p>
-            {{blog.content}}
-          </p>
-          
-        </div>
+        {% endfor %}
       </div>
-    {% endfor %}
+    </div>  
   </div>
 </div>
 <!-- About End -->
