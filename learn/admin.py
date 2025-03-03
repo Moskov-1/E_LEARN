@@ -8,6 +8,8 @@ class CourseAdmin(admin.ModelAdmin):
 class TagsAdmin(admin.ModelAdmin):
     # Ensure tags aren't pre-selected
     filter_horizontal = ('tags',)
+class InstructorAdmin(admin.ModelAdmin):
+    list_display = ('user', 'name', 'profession')
 
 admin.site.register(Course,CourseAdmin)
 admin.site.register(Video)
@@ -19,4 +21,4 @@ admin.site.register(PurchasedCourse)
 admin.site.register(Testimonial)
 admin.site.register(Tag)
 admin.site.register(Mail)
-admin.site.register(Instructor)
+admin.site.register(Instructor,InstructorAdmin)

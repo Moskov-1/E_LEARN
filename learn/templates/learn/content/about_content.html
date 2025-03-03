@@ -74,7 +74,7 @@
       <h2 class="text-center mb-4">Latest Blogs</h2>
       <div class='p-3 border rounded overflow-auto' style="max-height: 500px;">
 
-        {% for blog in blogs %}
+        {% for blog in scroll_blogs %}
         <br/>
           <div class="row">
             <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px">
@@ -96,7 +96,7 @@
                 </h6>
                 <h1 class="display-4">{{blog.title}}</h1>
                 {% for tag in blog.tags.all %}
-                <span class="badge bg-primary me-2" style="color:white;font-size: 1.2rem;">{{ tag.name }}</span>
+                <a href='{% url "learn:tblogs" %}?tag={{tag.id}}'><span class="badge bg-primary me-2" style="color:white;font-size: 1.2rem;">{{ tag.name }}</span></a>
                 {% endfor %}
               </div>
               <p>
@@ -111,4 +111,11 @@
   </div>
 </div>
 <!-- About End -->
+<!-- blog list start -->
+{% url "learn:home" as home_url %}
+{% if request.path != home_url %}
+  {% include "content/all_blogs_content.html" %}
+{% endif %}
+<!-- blog list End -->
+
 {% include "content/feature_content.html" %}

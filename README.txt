@@ -1,5 +1,6 @@
 ## Render
-	Service Live till 28-2-2025  	
+	Service was down from 28/2/25 to 2/3/25
+	Server up from 3/3/25 	
 	Link: https://e-learn-0f3t.onrender.com
 	
  

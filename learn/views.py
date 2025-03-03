@@ -31,13 +31,13 @@ def index(request):
     courses = Course.objects.all()[:6]
     Instructors = Instructor.objects.all()[:4]
     counts = {
-        'tags':tags.count(),
         'blogs':Blog.objects.count(),
+        'tags':tags.count(),
         'instructors':Instructor.objects.count(),
         'courses':Course.objects.count(),
     }
     context = {'tags':tags,
-               'blogs':blogs,
+               'scroll_blogs':blogs,
                 'courses':courses,
                 'instructors':Instructors,
                 'counts':counts
@@ -46,7 +46,13 @@ def index(request):
 
 
 def about(request):  
+    tag_id = request.GET.get('tag')
     blogs = Blog.objects.all()
+    if tag_id:
+        blogs = Blog.objects.filter(tags__id=tag_id)
+    paginator = Paginator(blogs, 6)
+    page_num = request.GET.get('page', 1)
+    page_blogs = paginator.get_page(page_num)
     counts = {
         'tags':Tag.objects.count(),
         'blogs':Blog.objects.count(),
@@ -54,10 +60,28 @@ def about(request):
         'courses':Course.objects.count(),
     }
     context = {
-               'blogs':blogs,
+               'scroll_blogs':blogs,
                 'counts':counts,
+                'page_blogs':page_blogs,
+               'selected_tag' : tag_id,
                }
     return render(request, "learn/about.html", context)
+def tbf(request, id):
+    return HttpResponse("tbf placeholder")
+def tb(request):
+    tag_id = request.GET.get('tag')
+    blogs = Blog.objects.all()
+    if tag_id:
+        blogs = Blog.objects.filter(tags__id=tag_id)
+    paginator = Paginator(blogs, 6)
+    page_num = request.GET.get('page', 1)
+    page_blogs = paginator.get_page(page_num)
+    
+    context = {
+               'page_blogs':page_blogs,
+               'selected_tag' : tag_id,
+    }
+    return render(request, "learn/blogs.html", context)
 
 def courses(request):  
     tag_id = request.GET.get('tag')
