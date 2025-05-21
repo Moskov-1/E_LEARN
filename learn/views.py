@@ -28,7 +28,7 @@ from django.core.paginator import Paginator
 def index(request):
     tags = Tag.objects.all()
     blogs = Blog.objects.all()
-    courses = Course.objects.all()[:6]
+    courses = Course.objects.all()[:5]
     Instructors = Instructor.objects.all()[:4]
     counts = {
         'blogs':Blog.objects.count(),
@@ -50,7 +50,7 @@ def about(request):
     blogs = Blog.objects.all()
     if tag_id:
         blogs = Blog.objects.filter(tags__id=tag_id)
-    paginator = Paginator(blogs, 6)
+    paginator = Paginator(blogs, 4)
     page_num = request.GET.get('page', 1)
     page_blogs = paginator.get_page(page_num)
     counts = {
@@ -73,7 +73,7 @@ def tb(request):
     blogs = Blog.objects.all()
     if tag_id:
         blogs = Blog.objects.filter(tags__id=tag_id)
-    paginator = Paginator(blogs, 6)
+    paginator = Paginator(blogs, 4)
     page_num = request.GET.get('page', 1)
     page_blogs = paginator.get_page(page_num)
     
@@ -88,7 +88,7 @@ def courses(request):
     courses = Course.objects.all()
     if tag_id:
         courses = Course.objects.filter(tags__id=tag_id)
-    paginator = Paginator(courses, 6)
+    paginator = Paginator(courses, 5)
 
     page_num = request.GET.get('page', 1)
     page_courses = paginator.get_page(page_num)
