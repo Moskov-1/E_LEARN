@@ -125,7 +125,22 @@ DATABASES = {
 }
 
 if ENVIRONMENT == 'production':
-    DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
+    # DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
+    
+    import psycopg2
+    import urllib.parse as up
+    up.uses_netloc.append("postgres")
+    url = config("DATABASE_URL")
+
+    try:
+        conn = psycopg2.connect(url)
+        cur = conn.cursor()
+        cur.execute("SELECT NOW()")
+        print("Connected! Time:", cur.fetchone())
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print("Failed:", e)
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
