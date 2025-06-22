@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Exit on error
+echo "===> Running build.sh"
 set -o errexit
 
 # Modify this line as needed for your package manager (pip, poetry, etc.)
@@ -10,9 +11,12 @@ python manage.py collectstatic --no-input
 
 # Apply any outstanding database migrations
 python manage.py makemigrations
+echo "===> Running migrations"
 
 python manage.py migrate
+echo "===> Done with migrations"
 
+echo "===> Creating superuser if not exists"
 
 # Create superuser from env vars
 python manage.py shell << END
